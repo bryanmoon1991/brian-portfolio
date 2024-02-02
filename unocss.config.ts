@@ -1,21 +1,24 @@
 import { defineConfig } from 'unocss';
 // import { presetMini } from '@unocss/preset-mini';
 import { presetUno } from '@unocss/preset-uno';
-import { presetFluid } from 'unocss-preset-fluid'
+import { presetFluid } from 'unocss-preset-fluid';
+// import { presetTypography } from 'unocss'
 
 export default defineConfig({
   presets: [
     presetUno(),
-      presetFluid({
-        maxWidth: 1440,
-        extendMaxWidth: 1920,
-        minWidth: 320,
-        ranges: {
-          xs: [12, 16],
-          sm: [14, 18],
-          md: [18, 24],
-          lg: [22, 30],
-        }
-      })
+    // presetTypography()
+  //   presetFluid({
+  //     maxWidth: 1440,
+  //     extendMaxWidth: 1920,
+  //     minWidth: 320,
+  //     useRemByDefault: true,
+  //     ranges: {
+  //       xs: [0.5, 1],
+  //       sm: [1, 1.5],
+  //       md: [2, 2.5],
+  //       lg: [3, 3.5],
+  //     },
+  //   }),
   ],
 });

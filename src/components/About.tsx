@@ -1,10 +1,10 @@
 import type { Component } from 'solid-js';
-// import { createSignal } from 'solid-js';
-// import Modal from './Modal';
 
 const About: Component = () => {
   return (
-    <>
+    <section
+      class='w-screen min-h-screen z-2 position-absolute bgcw'
+    >
       <p class='text-lg mt-28 ml-8 mr-8'>
         Brian is an art director and designer based in Brooklyn, New York. His
         work ranges from visual identities, art direction, editorial, and
@@ -75,10 +75,8 @@ const About: Component = () => {
           Moving Brands
         </p>
       </div>
-      <p class='w-full fixed bottom-0 pl'>
-	  	©2024 All Rights Reserved
-      </p>
-    </>
+      <p class='w-full fixed bottom-0 pl'>©2024 All Rights Reserved</p>
+    </section>
   );
 };
 

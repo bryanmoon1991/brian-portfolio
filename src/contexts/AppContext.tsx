@@ -25,6 +25,7 @@ export function AppProvider(props) {
     openModal: (modalName) => {
       setState('modalOpen', true);
       setState('currentModal', modalName);
+      console.log(modalName)
     },
     closeModal: () => {
       setState('modalOpen', false);

@@ -18,7 +18,7 @@ const TwoUp: Component<TwoUpProps> = (props) => {
 
   return (
     // <div class='flex xs:flex-gap-1 sm:flex-gap-3 md:flex-gap-6 lg:flex-gap-9 w-full h-full flex-justify-center flex-items-center object-contain '>
-    <div class='flex th-p w-full h-full flex-justify-center flex-items-center object-contain '>
+    <div class='flex th-p w-full h-full flex-justify-center flex-items-center object-contain snap-center'>
       <ImageThumb
         // src='/images/thumbnails/1_SonHeungMin_Thumbnail.webp'
         // alt='son_heung_min'

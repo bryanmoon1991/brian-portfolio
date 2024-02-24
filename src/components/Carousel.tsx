@@ -60,7 +60,8 @@ const Carousel: Component<CarouselProps> = (props) => {
 
   return (
     <section
-      class='w-screen min-h-screen z-2 position-absolute bgcw flex flex-justify-center flex-items-center object-contain'
+      // class='w-screen min-h-screen z-2 position-absolute bgcw flex flex-justify-center flex-items-center object-contain'
+      class='flex flex-justify-center flex-items-center object-contain'
       onClick={handleCarouselClick}
     >
       <Show when={imageUrls().length > 0}>

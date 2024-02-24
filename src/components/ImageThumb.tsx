@@ -29,9 +29,9 @@ const ImageThumb: Component<ImageThumbProps> = (props) => {
         class='font-0 width-a'
         onClick={handleImageClick}
       />
-      <Show when={state.currentModal == props.imageSet}>
+      {/* <Show when={state.currentModal == props.imageSet}>
         <Carousel imageSet={props.imageSet}/>
-      </Show>
+      </Show> */}
     </>
   );
 };

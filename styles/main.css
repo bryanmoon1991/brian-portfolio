@@ -15,3 +15,8 @@ html, body, #root {
   margin: 0;
   padding: 0;
 }
+
+#root {
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+}

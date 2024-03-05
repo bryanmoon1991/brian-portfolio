@@ -63,7 +63,7 @@ const Modal: Component<{ children: JSX.Element, correspondingGallery: string }> 
             (e.key || e.code) === 'Escape' ? closeModal() : null
           }
         /> */}
-        <section class='w-screen min-h-screen z-2 position-absolute bgcw' >
+        <section class='w-screen min-h-screen z-2 position-absolute top-0 bgcw' >
           {props.children}
         </section>
       </Show>

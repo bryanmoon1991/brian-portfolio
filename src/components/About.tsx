@@ -5,7 +5,7 @@ const About: Component = () => {
     <section
       class='w-screen min-h-screen z-2 position-absolute bgcw'
     >
-      <p class='text-lg mt-28 ml-8 mr-8'>
+      <p class='text-lg mt-28 ml-8 mr-8 font-light'>
         Brian is an art director and designer based in Brooklyn, New York. His
         work ranges from visual identities, art direction, editorial, and
         packaging/print for clients operating in fashion, music, technology, and

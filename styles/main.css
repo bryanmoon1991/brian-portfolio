@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'TimesNewRoman';
+  font-family: 'TimesNewRoman', sans-serif;
   src: url('fonts/TimesNewRoman.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;

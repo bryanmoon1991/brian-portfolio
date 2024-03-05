@@ -20,21 +20,22 @@ export default defineConfig({
           md: '768px',
           lg: '1024px',
           xl: '1280px',
-          '2xl': '1440px',
-          xxl: '1920px',
+          xxl: '1440px',
+          xxxl: '1920px',
         },
       },
       rules: [
-        ['x-a', { 'width': '38%' }],
-        ['mh-a', { 'max-height': '68%' }],
+        ['col-gap', { 'column-gap': '150px' }],
+        ['a', { 'width': '36vw' }],
+        // ['mh-a', { 'max-height': '68%' }],
 
-        ['x-b', { 'width': '28%' }],
-        ['mh-b', { 'max-height': '50%' }],
+        ['b', { 'width': '28vw' }],
+        ['mh', { 'max-height': '70%' }],
 
         // ['x-b', { 'width': '28vw' }],
         // ['mh-b', { 'max-height': '50%' }],
 
-        ['th-p', { 'gap': '10%' }],
+        ['gap', { 'gap': '10%' }],
         ['bgcw', { 'background-color': '#FFFFFF' }],
 
 
@@ -47,8 +48,8 @@ export default defineConfig({
 
       ],
       shortcuts: {
-        'width-a': 'x-a mh-a p-1 h-auto object-contain',
-        'width-b': 'x-b mh-b p-1 h-auto object-contain',
+        'width-a': 'a h-auto mh object-contain',
+        'width-b': 'b h-auto mh object-contain',
         'text-sm': 't-sm ls-sm',
         'text-md': 't-md ls-md',
         'text-lg': 't-lg ls-lg',

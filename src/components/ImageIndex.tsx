@@ -38,7 +38,7 @@ const ImageIndex: Component = (props) => {
             blurb: manifest[imgKey].blurb,
           };
         });
-        console.log(_imageData);
+        // console.log(_imageData);
         setGalleries(_imageData);
 
         const pairs = [];
@@ -51,7 +51,7 @@ const ImageIndex: Component = (props) => {
         }
 
         setImageDataPairs(pairs);
-        console.log(imageDataPairs());
+        // console.log(imageDataPairs());
       })
       .catch((error) => console.error('Failed to load image manifest:', error));
   });
@@ -99,7 +99,7 @@ const ImageIndex: Component = (props) => {
       if (!isNaN(index)) {
         // Logic to scroll to the specific image or adjust the view based on the index
         // This will depend on your layout and how you track image positions
-        console.log(`Direct access to image index: ${index}`);
+        // console.log(`Direct access to image index: ${index}`);
         scrollToImage(index);
       }
     }

@@ -32,7 +32,7 @@ export function AppProvider(props) {
   const navigate = useNavigate(); // Use the useNavigate hook for navigation
 
   const setScrollPosition = (scrollPosition: number) => {
-    console.log('in set state', scrollPosition)
+    // console.log('in set state', scrollPosition)
     setState('scrollPosition', scrollPosition);
   }
 

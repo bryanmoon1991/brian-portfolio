@@ -18,7 +18,7 @@ const Nav: Component = () => {
     <>
       <div class='flex flex-justify-between m1 w-full fixed top-0 z-3'>
         <p class='m-0 pl'>Brian You, Art Direction and Design, NY</p>
-        <p class='m-0 pr' onClick={handleAboutClick}>
+        <p class='m-0 pr cursor-pointer' onClick={handleAboutClick}>
           {state.modalOpen ? 'Close' : 'About'}
         </p>
       </div>

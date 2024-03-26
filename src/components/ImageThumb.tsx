@@ -1,8 +1,8 @@
-import type { Component } from 'solid-js';
-import { createSignal, createEffect, onCleanup, Show } from 'solid-js';
-import TextWithLinks from './TextWithLinks';
-import { useAppContext } from '../contexts/AppContext';
-import styles from './ImageThumb.module.css';
+import type { Component } from "solid-js";
+import { createSignal, createEffect, onCleanup, Show } from "solid-js";
+import TextWithLinks from "./TextWithLinks";
+import { useAppContext } from "../contexts/AppContext";
+import styles from "./ImageThumb.module.css";
 
 type ImageThumbProps = {
   src: string;
@@ -33,15 +33,15 @@ const ImageThumb: Component<ImageThumbProps> = (props) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            console.log(props.alt.slice(0, 5) + 'visible');
+            console.log(props.alt.slice(0, 5) + "visible");
           }
         });
       },
       {
         root: null,
-        rootMargin: '0px',
+        rootMargin: "0px",
         threshold: 0.1,
-      }
+      },
     );
 
     observer.observe(element);
@@ -54,23 +54,30 @@ const ImageThumb: Component<ImageThumbProps> = (props) => {
       <div
         class={
           isVisible()
-            ? `${styles['fade']} ${styles['visible']}`
-            : `${styles['fade']}`
+            ? `${styles["fade"]} ${styles["visible"]}`
+            : `${styles["fade"]}`
         }
       >
         <img
           src={props.src}
           alt={props.alt}
-          loading='lazy'
+          loading="lazy"
           id={`img-${props.alt.slice(0, 5)}`}
           class={`${
-            props.style == 'a'
-              ? 'cursor-pointer width-a'
-              : 'cursor-pointer font-0 width-b'
+            props.style == "a"
+              ? "xl:w-35vw lg:w-35vw md:w-29vw xs:w-45vw mh h-auto cursor-pointer object-contain"
+              : "xl:w-27vw lg:w-27vw md:w-27vw xs:w-40vw mh h-auto cursor-pointer object-contain"
           }`}
           onClick={handleImageClick}
         />
-        <TextWithLinks content={props.blurb} />
+        <TextWithLinks
+          content={props.blurb}
+          styles={
+            props.style == "a"
+              ? "xl:w-35vw lg:w-35vw md:w-29vw xs:w-45vw lg:leading-4 xs:leading-3 mt-1"
+              : "xl:w-27vw lg:w-27vw md:w-27vw xs:w-40vw lg:leading-4 xs:leading-3 mt-1"
+          }
+        />
       </div>
     </>
   );

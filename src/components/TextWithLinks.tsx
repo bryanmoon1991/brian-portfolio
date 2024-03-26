@@ -1,4 +1,4 @@
-import { createEffect, createSignal, For } from 'solid-js';
+import { createEffect, createSignal, For } from "solid-js";
 
 const TextWithLinks = (props) => {
   const [segments, setSegments] = createSignal([]);
@@ -11,30 +11,38 @@ const TextWithLinks = (props) => {
 
     inputText.replace(regex, (match, url, text, index) => {
       if (index > lastIndex) {
-        parts.push({ type: 'text', content: inputText.slice(lastIndex, index) });
+        parts.push({
+          type: "text",
+          content: inputText.slice(lastIndex, index),
+        });
       }
-      parts.push({ type: 'link', content: text, url });
+      parts.push({ type: "link", content: text, url });
       lastIndex = index + match.length;
       return match; // This return is not used; replace is used here for its side effects
     });
 
     if (lastIndex < inputText.length) {
-      parts.push({ type: 'text', content: inputText.slice(lastIndex) });
+      parts.push({ type: "text", content: inputText.slice(lastIndex) });
     }
 
     setSegments(parts);
   });
 
   return (
-    <section>
+    <section class={props.styles ?? ""}>
       <For each={segments()}>
         {(part) =>
-          part.type === 'link' ? (
-            <a class='m-0' href={part.url} target="_blank" rel="noopener noreferrer">
+          part.type === "link" ? (
+            <a
+              class="lg:text-4 xs:text-3 m-0"
+              href={part.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {part.content}
             </a>
           ) : (
-            <span class='m-0'>{part.content}</span>
+            <span class="lg:text-4 xs:text-3 m-0">{part.content}</span>
           )
         }
       </For>
@@ -42,4 +50,4 @@ const TextWithLinks = (props) => {
   );
 };
 
-export default TextWithLinks
+export default TextWithLinks;

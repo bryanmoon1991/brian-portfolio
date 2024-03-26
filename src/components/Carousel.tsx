@@ -1,5 +1,5 @@
-import type { Component } from 'solid-js';
-import { createSignal, Show, createEffect } from 'solid-js';
+import type { Component } from "solid-js";
+import { createSignal, Show, createEffect } from "solid-js";
 
 type CarouselProps = {
   imageSet: string; // Path to the directory of images
@@ -13,13 +13,13 @@ const Carousel: Component<CarouselProps> = (props) => {
   const [isSwiping, setIsSwiping] = createSignal(false);
 
   createEffect(() => {
-    fetch('/imageManifest.json')
+    fetch("/imageManifest.json")
       .then((response) => response.json())
       .then((manifest) => {
         const selectedSetUrls = manifest[props.imageSet].images;
         setImageUrls(selectedSetUrls);
       })
-      .catch((error) => console.error('Failed to load image manifest:', error));
+      .catch((error) => console.error("Failed to load image manifest:", error));
   });
 
   const nextImage = () => {
@@ -32,6 +32,7 @@ const Carousel: Component<CarouselProps> = (props) => {
 
   const handlePointerDown = (event: PointerEvent) => {
     setStartX(event.clientX);
+    // console.log('pointer down', event.clientX)
     setIsSwiping(true);
   };
 
@@ -40,7 +41,7 @@ const Carousel: Component<CarouselProps> = (props) => {
 
     const currentX = event.clientX;
     const diffX = startX() - currentX;
-
+    // console.log('pointer move', diffX)
     if (diffX > 50) {
       nextImage();
       setIsSwiping(false);
@@ -52,6 +53,7 @@ const Carousel: Component<CarouselProps> = (props) => {
 
   const handlePointerUp = () => {
     setIsSwiping(false);
+    // console.log('pointer up')
   };
 
   const handleCarouselClick = (event: MouseEvent) => {
@@ -68,16 +70,14 @@ const Carousel: Component<CarouselProps> = (props) => {
 
   return (
     <section
-      class='flex flex-justify-center flex-items-center object-contain'
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
+      class="flex h-full w-full items-center justify-center object-contain"
+      id="carousel"
       onClick={handleCarouselClick} // Keep this if you want to maintain click functionality
     >
       <Show when={imageUrls().length > 0}>
         <img
           src={imageUrls()[currentIndex()]}
-          class='w-auto h-auto object-contain max-h-screen max-w-screen'
+          class="mh-lg mw-lg h-auto w-auto object-contain"
         />
       </Show>
     </section>

@@ -1,30 +1,26 @@
-import type { Component } from 'solid-js';
+import type { Component } from "solid-js";
 
 const About: Component = () => {
   return (
-    <section
-      class='w-screen min-h-screen z-2 position-absolute bgcw'
-    >
-      <p class='text-lg mt-28 ml-8 mr-8 font-light'>
+    <section class="z-2 position-absolute bgcw min-h-screen w-screen">
+      <p class="xs:text-6 lg:text-10 ml-8 mr-8 mt-16 font-thin">
         Brian is an art director and designer based in Brooklyn, New York. His
         work ranges from visual identities, art direction, editorial, and
         packaging/print for clients operating in fashion, music, technology, and
         many more. <br /> <br /> Currently open for new projects, commissions,
         and collaborations.
       </p>
-      <div class='flex gap-30 ml-8 mr-8'>
-        <p class='text-sm'>
+      <div class="md:gap-30 xs:gap-5 xs:justify-between ml-8 mr-8 flex md:justify-start">
+        <p class="xs:text-xs md:text-sm">
           CONTACT
-          <br />
           <br />
           <br />
           hello@brianyou.info
           <br />
           @brian_you
         </p>
-        <p class='text-sm'>
+        <p class="xs:text-xs md:text-sm">
           SELECTED CLIENTS
-          <br />
           <br />
           <br />
           Apple
@@ -53,9 +49,8 @@ const About: Component = () => {
           <br />
           Wine Access
         </p>
-        <p class='text-sm'>
+        <p class="xs:text-xs md:text-sm">
           EXPERIENCE
-          <br />
           <br />
           <br />
           Apple
@@ -75,7 +70,9 @@ const About: Component = () => {
           Moving Brands
         </p>
       </div>
-      <p class='w-full fixed bottom-0 pl'>©2024 All Rights Reserved</p>
+      <p class="xs:text-xs pl fixed bottom-0 w-full">
+        ©2024 All Rights Reserved
+      </p>
     </section>
   );
 };

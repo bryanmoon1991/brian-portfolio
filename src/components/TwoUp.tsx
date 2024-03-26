@@ -1,5 +1,5 @@
-import type { Component } from 'solid-js';
-import ImageThumb from './ImageThumb';
+import type { Component } from "solid-js";
+import ImageThumb from "./ImageThumb";
 
 interface TwoUpProps {
   firstImage: {
@@ -19,10 +19,9 @@ interface TwoUpProps {
 }
 
 const TwoUp: Component<TwoUpProps> = (props) => {
-
   return (
     // <div class='flex xs:flex-gap-1 sm:flex-gap-3 md:flex-gap-6 lg:flex-gap-9 w-full h-full flex-justify-center flex-items-center object-contain '>
-    <div class='flex gap w-full h-screen flex-justify-center flex-items-center snap-center'>
+    <div class="flex-items-center flex h-screen w-full snap-center justify-evenly object-contain">
       <ImageThumb
         src={props.firstImage.src}
         alt={props.firstImage.alt}

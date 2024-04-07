@@ -16,11 +16,31 @@ const ImageThumb: Component<ImageThumbProps> = (props) => {
   const { state, openModal, closeModal } = useAppContext();
   const [isVisible, setIsVisible] = createSignal(false);
 
+  const carouselVisible = () => {
+    const event = new CustomEvent("carouselVisible", {
+      detail: {
+        /* You can pass additional data if needed */
+      },
+    });
+    document.dispatchEvent(event);
+  };
+
+  const carouselNotVisible = () => {
+    const event = new CustomEvent("carouselNotVisible", {
+      detail: {
+        /* You can pass additional data if needed */
+      },
+    });
+    document.dispatchEvent(event);
+  };
+
   const handleImageClick = () => {
     if (state.modalOpen) {
       closeModal();
+      // carouselNotVisible();
     } else {
       openModal(props.imageSet);
+      // carouselVisible();
     }
   };
 

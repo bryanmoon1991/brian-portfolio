@@ -48,6 +48,8 @@ export default defineConfig({
         ["h-lg", { height: "85%" }],
         ["mh-lg", { "max-height": "85%" }],
         ["mw-lg", { "max-width": "80%" }],
+        ["abcenter", { left: "50%" }],
+        ["abtransform", { transform: "translateX(-50%)" }],
       ],
       shortcuts: {
         "width-a": "xl:xl-a md:md-a xs:xs-a h-auto mh object-contain",
@@ -55,6 +57,7 @@ export default defineConfig({
         "text-sm": "t-sm ls-sm",
         "text-md": "t-md ls-md",
         "text-lg": "t-lg ls-lg",
+        "b-centered": "abcenter abtransform",
       },
     }),
   ],

@@ -1,8 +1,18 @@
-/* * {
-	box-sizing: border-box;
-	padding: 0;
-	margin: 0;
-  } */
+@keyframes pulsate {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulsate {
+    animation: pulsate 1s infinite;
+}
 
 .circle {
     --circle-size: 20px;
@@ -17,4 +27,20 @@
     background: white;
     mix-blend-mode: difference;
     z-index: 4;
+}
+
+@keyframes clickScale {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.5); /* Adjust scale value as needed */
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.scaleAnimation {
+    animation: clickScale 0.5s ease-in-out forwards; /* Adjust duration and timing as needed */
 }

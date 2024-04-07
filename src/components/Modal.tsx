@@ -6,6 +6,7 @@ import {
   onCleanup,
   Show,
 } from "solid-js";
+import { Transition } from "solid-transition-group";
 import { useAppContext } from "../contexts/AppContext";
 
 const Modal: Component<{
@@ -58,7 +59,20 @@ const Modal: Component<{
   });
 
   return (
-    <>
+    <Transition
+      onEnter={(el, done) => {
+        const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+          duration: 150,
+        });
+        a.finished.then(done);
+      }}
+      onExit={(el, done) => {
+        const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+          duration: 150,
+        });
+        a.finished.then(done);
+      }}
+    >
       <Show when={state.currentModal == props.correspondingGallery}>
         {/* <div
           role='presentation'
@@ -72,7 +86,7 @@ const Modal: Component<{
           {props.children}
         </section>
       </Show>
-    </>
+    </Transition>
   );
 };
 

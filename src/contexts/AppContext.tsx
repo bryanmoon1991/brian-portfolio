@@ -20,12 +20,36 @@ export function AppProvider(props) {
     currentModal: null,
   });
 
+  const carouselVisible = () => {
+    const event = new CustomEvent("carouselVisible", {
+      detail: {
+        /* You can pass additional data if needed */
+      },
+    });
+    document.dispatchEvent(event);
+  };
+
+  const carouselNotVisible = () => {
+    const event = new CustomEvent("carouselNotVisible", {
+      detail: {
+        /* You can pass additional data if needed */
+      },
+    });
+    document.dispatchEvent(event);
+  };
+
   const openModal = (modalName: string) => {
     setState("modalOpen", true);
     setState("currentModal", modalName);
+    if (modalName != "About") {
+      carouselVisible();
+    }
   };
 
   const closeModal = () => {
+    if (state.currentModal != "About") {
+      carouselNotVisible();
+    }
     setState("modalOpen", false);
     setState("currentModal", null);
   };

@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for brian-portfolio-dry-flower-5486 on 2024-03-26T16:18:33-04:00
+# fly.toml app configuration file generated for brian-portfolio-late-pine-2801 on 2024-04-07T17:29:13-04:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'brian-portfolio-dry-flower-5486'
+app = 'brian-portfolio-late-pine-2801'
 primary_region = 'ewr'
 
 [build]

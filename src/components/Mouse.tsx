@@ -6,44 +6,42 @@ const Mouse = () => {
   const [mouse, setMouse] = createSignal({ x: 0, y: 0 });
   const [previousMouse, setPreviousMouse] = createSignal({ x: 0, y: 0 });
   const [circle, setCircle] = createSignal({ x: 0, y: 0 });
+  const [isPulsating, setIsPulsating] = createSignal(false); // New signal to track pulsate state
+
   let currentScale = 0;
   let currentAngle = 0;
   let circleElement;
 
-  const speed = 0.3; // Smoothing factor for cursor movement speed
+  const speed = 0.2; // Smoothing factor for cursor movement speed
 
-  let carouselElement = document.getElementById("carousel"); // You'll need to set this reference appropriately
+  let carouselElement;
 
   const updateMousePosition = (e) => {
     setMouse({ x: e.clientX, y: e.clientY });
 
     const elementUnderCursor = document.elementFromPoint(e.clientX, e.clientY);
-    // Reset styles if not over an anchor or the carousel
-    circleElement.style.backgroundColor = "white";
-    circleElement.style.mixBlendMode = "difference";
     circleElement.style.backgroundImage = ""; // Reset background image for arrow
-
+    // setIsPulsating(false);
     if (elementUnderCursor) {
       if (elementUnderCursor.tagName === "A") {
-        circleElement.style.backgroundColor = "blue"; // Change to solid blue when over anchor tags
-        circleElement.style.mixBlendMode = "normal"; // Optional: Reset blend mode if needed
+        // circleElement.style.backgroundColor = "blue"; // Change to solid blue when over anchor tags
+        // circleElement.style.mixBlendMode = "normal"; // Optional: Reset blend mode if needed
       } else {
-        circleElement.style.backgroundColor = "white"; // Revert to original color
-        circleElement.style.mixBlendMode = "difference"; // Revert to original blend mode
+        // circleElement.style.backgroundColor = "white"; // Revert to original color
+        // circleElement.style.mixBlendMode = "difference"; // Revert to original blend mode
       }
       if (carouselElement && carouselElement.contains(elementUnderCursor)) {
         const carouselRect = carouselElement.getBoundingClientRect();
-        const hoverZoneWidth = carouselRect.width * 0.2; // 20% of the carousel width as the hover zone for each side
+        const hoverZoneWidth = carouselRect.width * 0.3; // 30% of the carousel width as the hover zone for each side
         if (e.clientX < carouselRect.left + hoverZoneWidth) {
-          // Mouse is in the left hover zone
-          circleElement.style.backgroundImage =
-            'url("/path/to/left-arrow-icon.png")';
-          circleElement.style.backgroundColor = "transparent";
+          console.log("left");
+          // circleElement.classList.add(styles.pulsate);
+          // setIsPulsating(true);
         } else if (e.clientX > carouselRect.right - hoverZoneWidth) {
-          // Mouse is in the right hover zone
-          circleElement.style.backgroundImage =
-            'url("/path/to/right-arrow-icon.png")';
-          circleElement.style.backgroundColor = "transparent";
+          console.log("right");
+          // setIsPulsating(true);
+        } else {
+          // setIsPulsating(false);
         }
       }
     }
@@ -61,6 +59,7 @@ const Mouse = () => {
   //     circleElement.style.mixBlendMode = 'difference'; // Revert to original blend mode
   //   }
   // };
+  const easeInOutQuad = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
 
   // Animation logic encapsulated in tick function
   const tick = () => {
@@ -81,7 +80,7 @@ const Mouse = () => {
       Math.sqrt(deltaMouseX ** 2 + deltaMouseY ** 2) * 4,
       150,
     );
-    const scaleValue = (mouseVelocity / 150) * 0.5;
+    const scaleValue = (mouseVelocity / 150) * 0.55;
     currentScale += (scaleValue - currentScale) * speed;
 
     // ROTATE
@@ -90,24 +89,56 @@ const Mouse = () => {
       currentAngle = angle;
     }
 
+    // if (circleElement) {
+    //   circleElement.style.transform =
+    //     `translate(${nextCircleX}px, ${nextCircleY}px) ` +
+    //     `rotate(${currentAngle}deg) ` +
+    //     `scale(${1 + currentScale}, ${1 - currentScale})`;
+    // }
+
+    // window.requestAnimationFrame(tick);
+
+    let scaleAdjustment = 1;
+    if (isPulsating()) {
+      // Adjust scale dynamically based on the pulsate state
+      // This is a simplified example; you'd want to create a more
+      // complex function to smoothly adjust scale over time
+      const pulseScale = Math.sin(Date.now() / 500) * 0.45 + 1; // Sinusoidal scale adjustment
+      scaleAdjustment = easeInOutQuad(pulseScale);
+    }
+
     if (circleElement) {
       circleElement.style.transform =
         `translate(${nextCircleX}px, ${nextCircleY}px) ` +
         `rotate(${currentAngle}deg) ` +
-        `scale(${1 + currentScale}, ${1 - currentScale})`;
+        `scale(${(1 + currentScale) * scaleAdjustment}, ${(1 - currentScale) * scaleAdjustment})`;
     }
 
     window.requestAnimationFrame(tick);
   };
 
-  // Initialize and cleanup
+  const handleCarouselVisible = (event) => {
+    carouselElement = document.getElementById("carousel");
+  };
+
+  const handleCarouselNotVisible = (event) => {
+    carouselElement = null;
+  };
+
   onMount(() => {
+    document.addEventListener("carouselVisible", handleCarouselVisible);
+    document.addEventListener("carouselNotVisible", handleCarouselNotVisible);
     window.addEventListener("mousemove", updateMousePosition);
-    tick(); // Start the animation
+    tick();
   });
 
   onCleanup(() => {
     window.removeEventListener("mousemove", updateMousePosition);
+    document.removeEventListener("carouselVisible", handleCarouselVisible);
+    document.removeEventListener(
+      "carouselNotVisible",
+      handleCarouselNotVisible,
+    );
   });
 
   return <div ref={circleElement} class={styles.circle}></div>;

@@ -55,7 +55,7 @@ const ImageIndex: Component = () => {
         </For>
       </div>
 
-      <For each={galleries()} fallback={<div>Loading...</div>}>
+      <For each={galleries()}>
         {(gallery) => (
           <Modal correspondingGallery={gallery.imageSet}>
             <Carousel imageSet={gallery.imageSet} />

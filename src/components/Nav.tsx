@@ -1,6 +1,7 @@
 import { createSignal, createEffect, onCleanup } from "solid-js";
 import type { Component } from "solid-js";
 import { Show } from "solid-js";
+import { Transition } from "solid-transition-group";
 import About from "./About";
 import { useAppContext } from "../contexts/AppContext";
 
@@ -60,9 +61,24 @@ const Nav: Component = () => {
           )}
         </p>
       </header>
-      <Show when={state.currentModal == "About"}>
-        <About />
-      </Show>
+      <Transition
+        onEnter={(el, done) => {
+          const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+            duration: 150,
+          });
+          a.finished.then(done);
+        }}
+        onExit={(el, done) => {
+          const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+            duration: 150,
+          });
+          a.finished.then(done);
+        }}
+      >
+        <Show when={state.currentModal == "About"}>
+          <About />
+        </Show>
+      </Transition>
     </>
   );
 };

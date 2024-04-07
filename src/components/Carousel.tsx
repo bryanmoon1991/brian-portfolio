@@ -7,6 +7,7 @@ import {
   onMount,
   onCleanup,
 } from "solid-js";
+import { Transition } from "solid-transition-group";
 
 type CarouselProps = {
   imageSet: string; // Path to the directory of images
@@ -32,6 +33,10 @@ const Carousel: Component<CarouselProps> = (props) => {
       })
       .catch((error) => console.error("Failed to load image manifest:", error));
   });
+
+  const isVideoFile = (src: string): boolean => {
+    return /\.(mp4|mov)$/i.test(src);
+  };
 
   const nextImage = () => {
     setCurrentIndex((i) => (i + 1) % imageUrls().length);
@@ -132,15 +137,47 @@ const Carousel: Component<CarouselProps> = (props) => {
         id="carousel"
         onClick={handleCarouselClick} // Keep this if you want to maintain click functionality
       >
+        {/* not working, but does the carousel need the animation? */}
         <Show when={imageUrls().length > 0}>
-          <img
-            src={imageUrls()[currentIndex()]}
-            // style={{ filter: dropShadowStyle() }}
-            style={{
-              filter: `drop-shadow(${distanceX()}px ${distanceY()}px 0px rgba(0,0,0,0.8))`,
+          <Transition
+            onEnter={(el, done) => {
+              const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+                duration: 150,
+              });
+              a.finished.then(done);
             }}
-            class="mh-lg mw-lg h-auto w-auto object-contain"
-          />
+            onExit={(el, done) => {
+              const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+                duration: 150,
+              });
+              a.finished.then(done);
+            }}
+          >
+            <Show
+              when={isVideoFile(imageUrls()[currentIndex()])}
+              fallback={
+                <img
+                  src={imageUrls()[currentIndex()]}
+                  style={{
+                    filter: `drop-shadow(${distanceX()}px ${distanceY()}px 0px rgba(0,0,0,0.8))`,
+                  }}
+                  class="mh-lg mw-lg h-auto w-auto object-contain"
+                />
+              }
+            >
+              <video
+                src={imageUrls()[currentIndex()]}
+                style={{
+                  filter: `drop-shadow(${distanceX()}px ${distanceY()}px 0px rgba(0,0,0,0.8))`,
+                }}
+                class="mh-lg mw-lg h-auto w-auto object-contain"
+                controls
+                autoplay
+                loop
+                muted
+              />
+            </Show>
+          </Transition>
         </Show>
       </section>
 

@@ -44,7 +44,7 @@ const ImageIndex: Component = () => {
 
   return (
     <>
-      <div>
+      <div class="bgcw">
         <For each={imageDataPairs()} fallback={<div>Loading...</div>}>
           {(pair) => (
             <TwoUp

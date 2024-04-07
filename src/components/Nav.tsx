@@ -28,7 +28,7 @@ const Nav: Component = () => {
 
   return (
     <>
-      <header class="z-3 fixed right-0 top-0 mt-2 flex w-full justify-between bg-transparent">
+      <header class="z-3 fixed left-0 top-0 mt-2 flex w-full justify-between">
         <p class="xl:text-4 sm:text-3 m-0 pl-8 mix-blend-screen">
           {state.currentModal != "About" &&
             (isSmallScreen()
@@ -36,7 +36,7 @@ const Nav: Component = () => {
               : "Brian You, Art Direction and Design, NY")}
         </p>
         <p
-          class="xl:text-4 sm:text-3 m-0 cursor-pointer pr-8 mix-blend-difference"
+          class="xl:text-4 sm:text-3 m-0 cursor-pointer pr-8 mix-blend-screen"
           onClick={handleAboutClick}
         >
           {state.modalOpen ? (

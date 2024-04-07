@@ -1,40 +1,25 @@
-import type { Component } from 'solid-js';
-import {
-  createSignal,
-  Show,
-  createEffect,
-} from 'solid-js';
+import type { Component } from "solid-js";
+import { createSignal, Show, createEffect } from "solid-js";
 
 type CarouselProps = {
   imageSet: string; // Path to the directory of images
 };
 
-type ModuleWithDefaultExport = {
-  default: string;
-};
-
 const Carousel: Component<CarouselProps> = (props) => {
-  // const imageModules = import.meta.glob(`${props.imageSet}*.jpg`, {
-  //   eager: true,
-  // });
-  // const images = Object.values(imageModules).map(
-  //   (module: ModuleWithDefaultExport) => module.default
-  // );
   const [currentIndex, setCurrentIndex] = createSignal(0);
   const [imageUrls, setImageUrls] = createSignal([]);
 
+  const [startX, setStartX] = createSignal(0);
+  const [isSwiping, setIsSwiping] = createSignal(false);
+
   createEffect(() => {
-    // Fetch the image manifest
-    fetch('/imageManifest.json') // Adjust the path if necessary
+    fetch("/imageManifest.json")
       .then((response) => response.json())
       .then((manifest) => {
-        // Use the prop to determine which image set to display
-        const selectedSetUrls = manifest[props.imageSet];
+        const selectedSetUrls = manifest[props.imageSet].images;
         setImageUrls(selectedSetUrls);
-        console.log(imageUrls());
-        // console.log(imageUrls.length, imageUrls().length)
       })
-      .catch((error) => console.error('Failed to load image manifest:', error));
+      .catch((error) => console.error("Failed to load image manifest:", error));
   });
 
   const nextImage = () => {
@@ -45,7 +30,32 @@ const Carousel: Component<CarouselProps> = (props) => {
     setCurrentIndex((i) => (i - 1 + imageUrls().length) % imageUrls().length);
   };
 
-  // Example: Handling click event to determine where the user clicked (left or right side)
+  const handlePointerDown = (event: PointerEvent) => {
+    setStartX(event.clientX);
+    // console.log('pointer down', event.clientX)
+    setIsSwiping(true);
+  };
+
+  const handlePointerMove = (event: PointerEvent) => {
+    if (!isSwiping()) return;
+
+    const currentX = event.clientX;
+    const diffX = startX() - currentX;
+    // console.log('pointer move', diffX)
+    if (diffX > 50) {
+      nextImage();
+      setIsSwiping(false);
+    } else if (diffX < -50) {
+      prevImage();
+      setIsSwiping(false);
+    }
+  };
+
+  const handlePointerUp = () => {
+    setIsSwiping(false);
+    // console.log('pointer up')
+  };
+
   const handleCarouselClick = (event: MouseEvent) => {
     const element = event.currentTarget as HTMLElement;
     const clickX = event.clientX;
@@ -60,14 +70,14 @@ const Carousel: Component<CarouselProps> = (props) => {
 
   return (
     <section
-      // class='w-screen min-h-screen z-2 position-absolute bgcw flex flex-justify-center flex-items-center object-contain'
-      class='flex flex-justify-center flex-items-center object-contain'
-      onClick={handleCarouselClick}
+      class="flex h-full w-full items-center justify-center object-contain"
+      id="carousel"
+      onClick={handleCarouselClick} // Keep this if you want to maintain click functionality
     >
       <Show when={imageUrls().length > 0}>
         <img
           src={imageUrls()[currentIndex()]}
-          class='w-auto h-auto object-contain max-h-screen max-w-screen'
+          class="mh-lg mw-lg h-auto w-auto object-contain"
         />
       </Show>
     </section>

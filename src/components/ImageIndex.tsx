@@ -1,59 +1,60 @@
-import type { Component } from 'solid-js';
-import { For, createEffect, createSignal, Show } from 'solid-js';
-import Carousel from './Carousel';
-import Modal from './Modal';
-import TwoUp from './TwoUp';
-import { useAppContext } from '../contexts/AppContext';
+import type { Component } from "solid-js";
+import { For, createEffect, createSignal } from "solid-js";
+import Carousel from "./Carousel";
+import Modal from "./Modal";
+import TwoUp from "./TwoUp";
 
-const ImageIndex: Component = (props) => {
-  const { state, openModal, closeModal } = useAppContext();
-  const [imageData, setImageData] = createSignal([]);
+const ImageIndex: Component = () => {
+  const [imageDataPairs, setImageDataPairs] = createSignal([]);
   const [galleries, setGalleries] = createSignal([]);
 
   createEffect(() => {
-    fetch('/imageManifest.json')
+    fetch("/imageManifest.json")
       .then((response) => response.json())
       .then((manifest) => {
-        const imageThumbs = Object.keys(manifest);
-        const imageSets = imageThumbs.map((img) => {
+        const imageKeys = Object.keys(manifest);
+        const _imageData = imageKeys.map((imgKey) => {
+          let filename = imgKey.split(".")[0];
+          let style = imgKey.split(".")[1];
           return {
-            src: `/images/thumbnails/${img}_Thumbnail.webp`,
-            alt: img,
-            imageSet: img,
+            src: `/images/thumbnails/${filename}_Thumbnail.webp`,
+            alt: filename,
+            imageSet: imgKey,
+            style: style,
+            blurb: manifest[imgKey].blurb,
           };
         });
+        // console.log(_imageData);
+        setGalleries(_imageData);
 
-        setGalleries(imageSets);
         const pairs = [];
-
-        for (let i = 0; i < imageSets.length; i += 2) {
+        for (let i = 0; i < _imageData.length; i += 2) {
           const pair = {
-            firstImage: imageSets[i],
-            secondImage: i + 1 < imageSets.length ? imageSets[i + 1] : '',
+            firstImage: _imageData[i],
+            secondImage: i + 1 < _imageData.length ? _imageData[i + 1] : "",
           };
           pairs.push(pair);
         }
 
-        setImageData(pairs);
-        console.log(imageData());
+        setImageDataPairs(pairs);
+        // console.log(imageDataPairs());
       })
-      .catch((error) => console.error('Failed to load image manifest:', error));
+      .catch((error) => console.error("Failed to load image manifest:", error));
   });
 
   return (
     <>
-      <Show when={!state.modalOpen}>
-        <div class='snap-mandatory snap-y'>
-          <For each={imageData()} fallback={<div>Loading...</div>}>
-            {(pair) => (
-              <TwoUp
-                firstImage={pair.firstImage}
-                secondImage={pair.secondImage}
-              />
-            )}
-          </For>
-        </div>
-      </Show>
+      <div>
+        <For each={imageDataPairs()} fallback={<div>Loading...</div>}>
+          {(pair) => (
+            <TwoUp
+              firstImage={pair.firstImage}
+              secondImage={pair.secondImage}
+            />
+          )}
+        </For>
+      </div>
+
       <For each={galleries()} fallback={<div>Loading...</div>}>
         {(gallery) => (
           <Modal correspondingGallery={gallery.imageSet}>

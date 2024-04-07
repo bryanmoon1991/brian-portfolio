@@ -1,5 +1,5 @@
-import { createContext, useContext } from 'solid-js';
-import { createStore } from 'solid-js/store';
+import { createContext, useContext } from "solid-js";
+import { createStore } from "solid-js/store";
 
 interface ModalState {
   modalOpen: boolean;
@@ -20,20 +20,24 @@ export function AppProvider(props) {
     currentModal: null,
   });
 
-  const store: AppContextType = {
-    state,
-    openModal: (modalName) => {
-      setState('modalOpen', true);
-      setState('currentModal', modalName);
-      console.log(modalName)
-    },
-    closeModal: () => {
-      setState('modalOpen', false);
-      setState('currentModal', null);
-    },
+  const openModal = (modalName: string) => {
+    setState("modalOpen", true);
+    setState("currentModal", modalName);
   };
 
-  return <AppContext.Provider value={store}>{props.children}</AppContext.Provider>;
+  const closeModal = () => {
+    setState("modalOpen", false);
+    setState("currentModal", null);
+  };
+  const store: AppContextType = {
+    state,
+    openModal,
+    closeModal,
+  };
+
+  return (
+    <AppContext.Provider value={store}>{props.children}</AppContext.Provider>
+  );
 }
 
 export function useAppContext() {

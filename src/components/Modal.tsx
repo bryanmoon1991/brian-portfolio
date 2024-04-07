@@ -5,10 +5,13 @@ import {
   createEffect,
   onCleanup,
   Show,
-} from 'solid-js';
-import { useAppContext } from '../contexts/AppContext';
+} from "solid-js";
+import { useAppContext } from "../contexts/AppContext";
 
-const Modal: Component<{ children: JSX.Element, correspondingGallery: string }> = (props) => {
+const Modal: Component<{
+  children: JSX.Element;
+  correspondingGallery: string;
+}> = (props) => {
   const { state, closeModal } = useAppContext();
 
   const focusableElements =
@@ -22,14 +25,16 @@ const Modal: Component<{ children: JSX.Element, correspondingGallery: string }> 
       // const modalFocusableElements = modal.querySelectorAll(focusableElements);
       // const firstFocusableElement = modalFocusableElements?.[0] as HTMLElement;
       // const lastFocusableElement = modalFocusableElements?.[
-        // modalFocusableElements.length - 1
+      // modalFocusableElements.length - 1
       // ] as HTMLElement;
       const focusTrap = function (e: KeyboardEvent) {
         const { key, code, shiftKey } = e;
         // const isTabPressed = (key || code) === 'Tab';
-        const isEscapePressed = (key || code) === 'Escape';
+        const isEscapePressed = (key || code) === "Escape";
         // if (!isTabPressed && !isEscapePressed) return;
-        if (isEscapePressed) { closeModal() }
+        if (isEscapePressed) {
+          closeModal();
+        }
         // if (shiftKey) {
         //   // if shift key pressed for shift + tab combination
         //   if (document.activeElement === firstFocusableElement) {
@@ -44,9 +49,9 @@ const Modal: Component<{ children: JSX.Element, correspondingGallery: string }> 
         // }
       };
       // firstFocusableElement?.focus();
-      document.addEventListener('keydown', focusTrap);
+      document.addEventListener("keydown", focusTrap);
       onCleanup(() => {
-        document.removeEventListener('keydown', focusTrap);
+        document.removeEventListener("keydown", focusTrap);
         originalFocusedElement?.focus();
       });
     }
@@ -63,7 +68,7 @@ const Modal: Component<{ children: JSX.Element, correspondingGallery: string }> 
             (e.key || e.code) === 'Escape' ? closeModal() : null
           }
         /> */}
-        <section class='w-screen min-h-screen z-2 position-absolute bgcw' >
+        <section class="z-2 position-absolute bgcw top-0 h-full min-h-screen w-screen">
           {props.children}
         </section>
       </Show>

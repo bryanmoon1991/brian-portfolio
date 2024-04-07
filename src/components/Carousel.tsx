@@ -17,10 +17,6 @@ const Carousel: Component<CarouselProps> = (props) => {
   const [currentIndex, setCurrentIndex] = createSignal(0);
   const [imageUrls, setImageUrls] = createSignal([]);
 
-  const [dropShadowStyle, setDropShadowStyle] = createSignal("");
-  const [distanceX, setDistanceX] = createSignal(0);
-  const [distanceY, setDistanceY] = createSignal(0);
-
   const [startX, setStartX] = createSignal(0);
   const [isSwiping, setIsSwiping] = createSignal(false);
 
@@ -88,48 +84,6 @@ const Carousel: Component<CarouselProps> = (props) => {
     setCurrentIndex(index);
   };
 
-  const updateDropShadow = (event: MouseEvent) => {
-    const carouselElement = document.getElementById("carousel");
-    if (!carouselElement) return;
-
-    const rect = carouselElement.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const distanceX = ((event.clientX - centerX) / 70) * -1;
-    const distanceY = ((event.clientY - centerY) / 70) * -1.5;
-    const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2); // Distance from center
-
-    // Calculate shadow intensity based on distance
-    const maxDistance = Math.max(rect.width, rect.height) / 2;
-    const intensity = Math.min(distance / maxDistance, 1);
-
-    // Adjust these values to achieve the desired visual effect
-    const blur = 0 * intensity; // Base blur plus intensity
-    const spread = 1 + 5 * intensity; // Base spread plus intensity
-
-    // Update drop shadow style
-    setDistanceX(distanceX);
-    setDistanceY(distanceY);
-    setDropShadowStyle(
-      `drop-shadow(${distanceX}px ${distanceY}px ${blur}px ${spread}px rgba(0,0,0,0.5))`,
-    );
-    // console.log(dropShadowStyle());
-  };
-
-  onMount(() => {
-    const carouselElement = document.getElementById("carousel");
-    if (carouselElement) {
-      carouselElement.addEventListener("mousemove", updateDropShadow);
-    }
-  });
-
-  onCleanup(() => {
-    const carouselElement = document.getElementById("carousel");
-    if (carouselElement) {
-      carouselElement.removeEventListener("mousemove", updateDropShadow);
-    }
-  });
-
   return (
     <>
       <section
@@ -137,7 +91,6 @@ const Carousel: Component<CarouselProps> = (props) => {
         id="carousel"
         onClick={handleCarouselClick} // Keep this if you want to maintain click functionality
       >
-        {/* not working, but does the carousel need the animation? */}
         <Show when={imageUrls().length > 0}>
           <Transition
             onEnter={(el, done) => {
@@ -158,21 +111,15 @@ const Carousel: Component<CarouselProps> = (props) => {
               fallback={
                 <img
                   src={imageUrls()[currentIndex()]}
-                  style={{
-                    filter: `drop-shadow(${distanceX()}px ${distanceY()}px 0px rgba(0,0,0,0.8))`,
-                  }}
                   class="mh-lg mw-lg h-auto w-auto object-contain"
                 />
               }
             >
               <video
                 src={imageUrls()[currentIndex()]}
-                style={{
-                  filter: `drop-shadow(${distanceX()}px ${distanceY()}px 0px rgba(0,0,0,0.8))`,
-                }}
                 class="mh-lg mw-lg h-auto w-auto object-contain"
                 controls
-                autoplay
+                // autoplay
                 loop
                 muted
               />

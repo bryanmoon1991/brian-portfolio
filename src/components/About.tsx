@@ -1,6 +1,19 @@
+import { createSignal, createEffect, onCleanup } from "solid-js";
 import type { Component } from "solid-js";
 
 const About: Component = () => {
+  const [isSmallScreen, setIsSmallScreen] = createSignal(false);
+
+  createEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 640px)");
+    const updateScreenSize = () => setIsSmallScreen(mediaQuery.matches);
+
+    updateScreenSize();
+    mediaQuery.addListener(updateScreenSize);
+
+    onCleanup(() => mediaQuery.removeListener(updateScreenSize));
+  });
+
   return (
     <section class="z-2 position-absolute bgcw min-h-screen w-screen">
       <p class="xs:text-6 lg:text-9 ml-8 mr-8 mt-16 font-thin">
@@ -11,7 +24,7 @@ const About: Component = () => {
         and collaborations.
       </p>
       <div class="md:gap-30 xs:gap-5 xs:justify-between ml-8 mr-8 flex md:justify-start">
-        <p class="xs:text-xs md:text-sm">
+        <p class="xs:text-3 md:text-sm">
           CONTACT
           <br />
           <br />
@@ -19,8 +32,8 @@ const About: Component = () => {
           <br />
           @brian_you
         </p>
-        <p class="xs:text-xs md:text-sm">
-          SELECTED CLIENTS
+        <p class="xs:text-3 md:text-sm">
+          {isSmallScreen() ? "CLIENTS" : "SELECTED CLIENTS"}
           <br />
           <br />
           Apple
@@ -49,7 +62,7 @@ const About: Component = () => {
           <br />
           Wine Access
         </p>
-        <p class="xs:text-xs md:text-sm">
+        <p class="xs:text-3 md:text-sm">
           EXPERIENCE
           <br />
           <br />
@@ -61,7 +74,7 @@ const About: Component = () => {
           <br />
           Transport NY
           <br />
-          Jones Knowles Ritchie
+          {isSmallScreen() ? "JKR" : "Jones Knowles Ritchie"}
           <br />
           With Projects
           <br />
@@ -70,7 +83,7 @@ const About: Component = () => {
           Moving Brands
         </p>
       </div>
-      <p class="xs:text-xs pl fixed bottom-0 w-full">
+      <p class="xs:text-2 pl fixed bottom-0 w-full">
         ©2024 All Rights Reserved
       </p>
     </section>

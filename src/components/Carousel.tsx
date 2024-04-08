@@ -141,7 +141,7 @@ const Carousel: Component<CarouselProps> = (props) => {
       </section>
 
       <Show when={imageUrls().length > 1}>
-        <div class="z-3 b-centered absolute bottom-5 flex gap-2">
+        <div class="z-3 b-centered top-90 absolute flex gap-4">
           <For each={imageUrls()}>
             {(url, index) => (
               <span

@@ -30,7 +30,8 @@ export default defineConfig({
         //image thumb
         ["col-gap", { "column-gap": "150px" }],
         [/^w-(\d+)vw$/, ([, d]) => ({ width: `${d}vw` })],
-        ["mh", { "max-height": "70%" }],
+        [/^w-(\d+)px$/, ([, d]) => ({ width: `${d}px` })],
+        ["mh", { "max-height": "80vh" }],
 
         //modal
         ["gap", { gap: "10%" }],
@@ -47,8 +48,8 @@ export default defineConfig({
         //carousel
         ["mobile-height", { height: "100svh" }],
         ["h-lg", { height: "85%" }],
-        ["mh-lg", { "max-height": "85%" }],
-        ["mw-lg", { "max-width": "80%" }],
+        ["mh-lg", { "max-height": "90%" }],
+        ["mw-lg", { "max-width": "90%" }],
         ["abcenter", { left: "50%" }],
         ["abtransform", { transform: "translateX(-50%)" }],
       ],

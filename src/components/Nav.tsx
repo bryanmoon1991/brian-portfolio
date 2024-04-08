@@ -29,15 +29,15 @@ const Nav: Component = () => {
 
   return (
     <>
-      <header class="z-3 fixed left-0 top-0 mt-2 flex w-full justify-between">
-        <a class="xl:text-4 sm:text-3 m-0 pl-8 mix-blend-screen">
+      <header class="z-3 fixed left-0 top-0 mt-4 flex w-full justify-between">
+        <a class="xl:text-4 sm:text-3 m-0 pl-4 mix-blend-screen">
           {state.currentModal != "About" &&
             (isSmallScreen()
               ? "Brian You"
               : "Brian You, Art Direction and Design, NY")}
         </a>
         <p
-          class="xl:text-4 sm:text-3 m-0 cursor-pointer pr-8 mix-blend-screen"
+          class="xl:text-4 sm:text-3 m-0 cursor-pointer pr-4 mix-blend-screen"
           onClick={handleAboutClick}
         >
           {state.modalOpen ? (

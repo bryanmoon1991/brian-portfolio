@@ -45,6 +45,7 @@ export default defineConfig({
         ["ls-lg", { "letter-spacing": "-0.015rem" }],
 
         //carousel
+        ["mobile-height", { height: "100svh" }],
         ["h-lg", { height: "85%" }],
         ["mh-lg", { "max-height": "85%" }],
         ["mw-lg", { "max-width": "80%" }],

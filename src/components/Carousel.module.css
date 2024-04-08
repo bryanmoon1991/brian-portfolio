@@ -1,0 +1,4 @@
+.carousel {
+    height: -webkit-fill-available;
+    min-height: 100vh;
+}

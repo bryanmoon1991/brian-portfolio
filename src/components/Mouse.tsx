@@ -12,7 +12,7 @@ const Mouse = () => {
   let currentAngle = 0;
   let circleElement;
 
-  const speed = 0.2; // Smoothing factor for cursor movement speed
+  const speed = 0.25; // Smoothing factor for cursor movement speed
 
   let carouselElement;
 
@@ -22,7 +22,10 @@ const Mouse = () => {
     const elementUnderCursor = document.elementFromPoint(e.clientX, e.clientY);
     // setIsPulsating(false);
     if (elementUnderCursor) {
-      if (elementUnderCursor.tagName === "A") {
+      if (
+        elementUnderCursor.tagName === "A" ||
+        elementUnderCursor.classList.contains("cursor-pointer")
+      ) {
         // circleElement.style.backgroundColor = "blue"; // Change to solid blue when over anchor tags
         // circleElement.style.mixBlendMode = "normal"; // Optional: Reset blend mode if needed
         setIsPulsating(true);
@@ -31,35 +34,9 @@ const Mouse = () => {
         // circleElement.style.mixBlendMode = "difference"; // Revert to original blend mode
         setIsPulsating(false);
       }
-      if (carouselElement && carouselElement.contains(elementUnderCursor)) {
-        const carouselRect = carouselElement.getBoundingClientRect();
-        const hoverZoneWidth = carouselRect.width * 0.3; // 30% of the carousel width as the hover zone for each side
-        if (e.clientX < carouselRect.left + hoverZoneWidth) {
-          // console.log("left");
-          // circleElement.classList.add(styles.pulsate);
-          // setIsPulsating(true);
-        } else if (e.clientX > carouselRect.right - hoverZoneWidth) {
-          // console.log("right");
-          // setIsPulsating(true);
-        } else {
-          // setIsPulsating(false);
-        }
-      }
     }
   };
 
-  // Update mouse position and check for anchor hover
-  // const updateMousePosition = (e) => {
-  //   setMouse({ x: e.clientX, y: e.clientY });
-  //   const elementUnderCursor = document.elementFromPoint(e.clientX, e.clientY);
-  //   if (elementUnderCursor && (elementUnderCursor.tagName === 'A') ) {
-  //     circleElement.style.backgroundColor = 'blue'; // Change to solid blue when over anchor tags
-  //     circleElement.style.mixBlendMode = 'normal'; // Optional: Reset blend mode if needed
-  //   } else {
-  //     circleElement.style.backgroundColor = 'white'; // Revert to original color
-  //     circleElement.style.mixBlendMode = 'difference'; // Revert to original blend mode
-  //   }
-  // };
   const easeInOutQuad = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
 
   // Animation logic encapsulated in tick function
@@ -104,7 +81,7 @@ const Mouse = () => {
       // Adjust scale dynamically based on the pulsate state
       // This is a simplified example; you'd want to create a more
       // complex function to smoothly adjust scale over time
-      const pulseScale = Math.sin(Date.now() / 500) * 0.45 + 1; // Sinusoidal scale adjustment
+      const pulseScale = Math.sin(Date.now() / 500) * 0.25 + 1; // Sinusoidal scale adjustment
       scaleAdjustment = pulseScale;
     }
 

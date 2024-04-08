@@ -8,6 +8,7 @@ import {
   onCleanup,
 } from "solid-js";
 import { Transition } from "solid-transition-group";
+import styles from "./Carousel.module.css";
 
 type CarouselProps = {
   imageSet: string; // Path to the directory of images
@@ -98,7 +99,7 @@ const Carousel: Component<CarouselProps> = (props) => {
   return (
     <>
       <section
-        class="flex h-full w-full items-center justify-around object-contain"
+        class="xs:mobile-height flex w-full items-center justify-around overflow-hidden object-contain lg:h-full"
         id="carousel"
         onClick={handleCarouselClick} // Keep this if you want to maintain click functionality
       >

@@ -10,6 +10,9 @@ dependencies:
     version: 1.7.6
 
 devDependencies:
+  '@solid-primitives/intersection-observer':
+    specifier: ^2.1.6
+    version: 2.1.6(solid-js@1.7.6)
   '@unocss/preset-mini':
     specifier: ^0.58.3
     version: 0.58.7
@@ -1069,6 +1072,15 @@ packages:
       solid-js: ^1.6.12
     dependencies:
       '@solid-primitives/utils': 6.2.0(solid-js@1.7.6)
+      solid-js: 1.7.6
+    dev: true
+
+  /@solid-primitives/intersection-observer@2.1.6(solid-js@1.7.6):
+    resolution: {integrity: sha512-SeiCmN/R46Z+o9+5HhIQzSor0DqVPyo4ROLQMvCI8AsGZl/5nHlWzHTTbWPeukVUXTgb04wfC3DUo9IzF/XloA==}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      '@solid-primitives/utils': 6.2.3(solid-js@1.7.6)
       solid-js: 1.7.6
     dev: true
 

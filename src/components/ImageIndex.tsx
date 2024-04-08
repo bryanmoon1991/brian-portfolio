@@ -2,6 +2,7 @@ import type { Component } from "solid-js";
 import { For, createEffect, createSignal } from "solid-js";
 import Carousel from "./Carousel";
 import Modal from "./Modal";
+import Loader from "./Loader";
 import TwoUp from "./TwoUp";
 
 const ImageIndex: Component = () => {
@@ -45,7 +46,7 @@ const ImageIndex: Component = () => {
   return (
     <>
       <div class="bgcw">
-        <For each={imageDataPairs()} fallback={<div>Loading...</div>}>
+        <For each={imageDataPairs()} fallback={<Loader></Loader>}>
           {(pair) => (
             <TwoUp
               firstImage={pair.firstImage}

@@ -20,25 +20,26 @@ const Mouse = () => {
     setMouse({ x: e.clientX, y: e.clientY });
 
     const elementUnderCursor = document.elementFromPoint(e.clientX, e.clientY);
-    circleElement.style.backgroundImage = ""; // Reset background image for arrow
     // setIsPulsating(false);
     if (elementUnderCursor) {
       if (elementUnderCursor.tagName === "A") {
         // circleElement.style.backgroundColor = "blue"; // Change to solid blue when over anchor tags
         // circleElement.style.mixBlendMode = "normal"; // Optional: Reset blend mode if needed
+        setIsPulsating(true);
       } else {
         // circleElement.style.backgroundColor = "white"; // Revert to original color
         // circleElement.style.mixBlendMode = "difference"; // Revert to original blend mode
+        setIsPulsating(false);
       }
       if (carouselElement && carouselElement.contains(elementUnderCursor)) {
         const carouselRect = carouselElement.getBoundingClientRect();
         const hoverZoneWidth = carouselRect.width * 0.3; // 30% of the carousel width as the hover zone for each side
         if (e.clientX < carouselRect.left + hoverZoneWidth) {
-          console.log("left");
+          // console.log("left");
           // circleElement.classList.add(styles.pulsate);
           // setIsPulsating(true);
         } else if (e.clientX > carouselRect.right - hoverZoneWidth) {
-          console.log("right");
+          // console.log("right");
           // setIsPulsating(true);
         } else {
           // setIsPulsating(false);
@@ -104,7 +105,7 @@ const Mouse = () => {
       // This is a simplified example; you'd want to create a more
       // complex function to smoothly adjust scale over time
       const pulseScale = Math.sin(Date.now() / 500) * 0.45 + 1; // Sinusoidal scale adjustment
-      scaleAdjustment = easeInOutQuad(pulseScale);
+      scaleAdjustment = pulseScale;
     }
 
     if (circleElement) {

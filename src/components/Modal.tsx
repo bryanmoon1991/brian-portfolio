@@ -3,6 +3,7 @@ import {
   JSX,
   createSignal,
   createEffect,
+  onMount,
   onCleanup,
   Show,
 } from "solid-js";
@@ -74,14 +75,6 @@ const Modal: Component<{
       }}
     >
       <Show when={state.currentModal == props.correspondingGallery}>
-        {/* <div
-          role='presentation'
-          class='modal__backdrop'
-          onClick={() => closeModal()}
-          onKeyPress={(e) =>
-            (e.key || e.code) === 'Escape' ? closeModal() : null
-          }
-        /> */}
         <section class="z-2 position-absolute bgcw top-0 h-full min-h-screen w-screen">
           {props.children}
         </section>

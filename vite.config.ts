@@ -31,7 +31,7 @@ export default defineConfig({
         ["col-gap", { "column-gap": "150px" }],
         [/^w-(\d+)vw$/, ([, d]) => ({ width: `${d}vw` })],
         [/^w-(\d+)px$/, ([, d]) => ({ width: `${d}px` })],
-        ["mh", { "max-height": "80vh" }],
+        ["mh", { "max-height": "83vh" }],
 
         //modal
         ["gap", { gap: "10%" }],

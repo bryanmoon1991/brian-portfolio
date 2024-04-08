@@ -44,7 +44,7 @@ const Carousel: Component<CarouselProps> = (props) => {
 
   const handlePointerDown = (event: PointerEvent) => {
     setStartX(event.clientX);
-    // console.log('pointer down', event.clientX)
+    console.log("pointer down", event.clientX);
     setIsSwiping(true);
   };
 
@@ -53,11 +53,11 @@ const Carousel: Component<CarouselProps> = (props) => {
 
     const currentX = event.clientX;
     const diffX = startX() - currentX;
-    // console.log('pointer move', diffX)
-    if (diffX > 50) {
+    console.log("pointer move", diffX);
+    if (diffX > 20) {
       nextImage();
       setIsSwiping(false);
-    } else if (diffX < -50) {
+    } else if (diffX < -20) {
       prevImage();
       setIsSwiping(false);
     }
@@ -65,7 +65,7 @@ const Carousel: Component<CarouselProps> = (props) => {
 
   const handlePointerUp = () => {
     setIsSwiping(false);
-    // console.log('pointer up')
+    console.log("pointer up");
   };
 
   const handleCarouselClick = (event: MouseEvent) => {
@@ -83,6 +83,17 @@ const Carousel: Component<CarouselProps> = (props) => {
   const selectImage = (index: number) => {
     setCurrentIndex(index);
   };
+
+  onMount(() => {
+    document.addEventListener("pointerup", handlePointerUp);
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("pointermove", handlePointerMove);
+  });
+  onCleanup(() => {
+    document.removeEventListener("pointerup", handlePointerUp);
+    document.removeEventListener("pointerdown", handlePointerDown);
+    document.removeEventListener("pointermove", handlePointerMove);
+  });
 
   return (
     <>

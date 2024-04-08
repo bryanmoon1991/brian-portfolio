@@ -83,7 +83,7 @@ const Carousel: Component<CarouselProps> = (props) => {
       <Show when={imageUrls().length > 0}>
         <div
           ref={(el) => (carouselRef = el)}
-          class={`mobile-max-h h-auto w-screen overflow-x-scroll`}
+          class={`h-screen w-screen overflow-x-scroll`}
           style={{
             display: "flex",
             "scroll-snap-type": "x mandatory",

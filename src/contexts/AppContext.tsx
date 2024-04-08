@@ -1,4 +1,4 @@
-import { createContext, useContext } from "solid-js";
+import { createContext, useContext, onMount, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
 
 interface ModalState {
@@ -44,6 +44,8 @@ export function AppProvider(props) {
     if (modalName != "About") {
       carouselVisible();
     }
+    history.pushState({ modalOpen: true }, null);
+    console.log("open modal", history.state);
   };
 
   const closeModal = () => {
@@ -52,12 +54,27 @@ export function AppProvider(props) {
     }
     setState("modalOpen", false);
     setState("currentModal", null);
+    history.replaceState({}, null);
   };
+
+  const handleBackNav = (event) => {
+    event.preventDefault();
+    closeModal();
+  };
+
   const store: AppContextType = {
     state,
     openModal,
     closeModal,
   };
+
+  // Don't forget to remove the event listener on component unmount
+  onMount(() => {
+    document.addEventListener("popstate", handleBackNav);
+  });
+  onCleanup(() => {
+    document.removeEventListener("popstate", handleBackNav);
+  });
 
   return (
     <AppContext.Provider value={store}>{props.children}</AppContext.Provider>

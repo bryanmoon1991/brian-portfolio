@@ -1,10 +1,9 @@
 import type { Component } from "solid-js";
 import { createSignal, Show, For, createEffect, onCleanup } from "solid-js";
-import { Transition } from "solid-transition-group";
-import styles from "./Carousel.module.css";
+import Loader from "./Loader";
 
 type CarouselProps = {
-  imageSet: string; // Path to the directory of images
+  imageSet: string;
 };
 
 const Carousel: Component<CarouselProps> = (props) => {
@@ -80,7 +79,7 @@ const Carousel: Component<CarouselProps> = (props) => {
 
   return (
     <>
-      <Show when={imageUrls().length > 0}>
+      <Show when={imageUrls().length > 0} fallback={<Loader />}>
         <div
           ref={(el) => (carouselRef = el)}
           class={`h-screen w-screen overflow-x-scroll`}
@@ -125,7 +124,7 @@ const Carousel: Component<CarouselProps> = (props) => {
       </Show>
 
       <Show when={imageUrls().length > 1}>
-        <div class="absolute bottom-4 flex w-full justify-center gap-4">
+        <div class="xs:bottom-35 absolute flex w-full justify-center gap-4 md:bottom-3">
           <For each={imageUrls()}>
             {(url, index) => (
               <span

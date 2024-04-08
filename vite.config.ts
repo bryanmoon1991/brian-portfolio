@@ -47,8 +47,9 @@ export default defineConfig({
 
         //carousel
         ["mobile-height", { height: "100svh" }],
+        ["mobile-max-h", { "max-height": "100svh" }],
         ["h-lg", { height: "85%" }],
-        ["mh-lg", { "max-height": "90%" }],
+        ["mh-lg", { "max-height": "85%" }],
         ["mw-lg", { "max-width": "90%" }],
         ["abcenter", { left: "50%" }],
         ["abtransform", { transform: "translateX(-50%)" }],

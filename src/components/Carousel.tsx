@@ -1,12 +1,5 @@
 import type { Component } from "solid-js";
-import {
-  createSignal,
-  Show,
-  For,
-  createEffect,
-  onMount,
-  onCleanup,
-} from "solid-js";
+import { createSignal, Show, For, createEffect, onCleanup } from "solid-js";
 import { Transition } from "solid-transition-group";
 import styles from "./Carousel.module.css";
 
@@ -18,8 +11,8 @@ const Carousel: Component<CarouselProps> = (props) => {
   const [currentIndex, setCurrentIndex] = createSignal(0);
   const [imageUrls, setImageUrls] = createSignal([]);
 
-  const [startX, setStartX] = createSignal(0);
-  const [isSwiping, setIsSwiping] = createSignal(false);
+  let carouselRef: HTMLDivElement;
+  let observer;
 
   createEffect(() => {
     fetch("/imageManifest.json")
@@ -27,6 +20,24 @@ const Carousel: Component<CarouselProps> = (props) => {
       .then((manifest) => {
         const selectedSetUrls = manifest[props.imageSet].images;
         setImageUrls(selectedSetUrls);
+
+        observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const index = entry.target.getAttribute("data-index");
+                setCurrentIndex(index ? parseInt(index, 10) : 0);
+              }
+            });
+          },
+          {
+            root: carouselRef,
+            threshold: 0.5,
+          },
+        );
+
+        const nodes = carouselRef?.querySelectorAll("[data-index]");
+        nodes.forEach((node) => observer.observe(node));
       })
       .catch((error) => console.error("Failed to load image manifest:", error));
   });
@@ -36,37 +47,11 @@ const Carousel: Component<CarouselProps> = (props) => {
   };
 
   const nextImage = () => {
-    setCurrentIndex((i) => (i + 1) % imageUrls().length);
+    selectImage((currentIndex() + 1) % imageUrls().length);
   };
 
   const prevImage = () => {
-    setCurrentIndex((i) => (i - 1 + imageUrls().length) % imageUrls().length);
-  };
-
-  const handlePointerDown = (event: PointerEvent) => {
-    setStartX(event.clientX);
-    console.log("pointer down", event.clientX);
-    setIsSwiping(true);
-  };
-
-  const handlePointerMove = (event: PointerEvent) => {
-    if (!isSwiping()) return;
-
-    const currentX = event.clientX;
-    const diffX = startX() - currentX;
-    console.log("pointer move", diffX);
-    if (diffX > 20) {
-      nextImage();
-      setIsSwiping(false);
-    } else if (diffX < -20) {
-      prevImage();
-      setIsSwiping(false);
-    }
-  };
-
-  const handlePointerUp = () => {
-    setIsSwiping(false);
-    console.log("pointer up");
+    selectImage((currentIndex() - 1 + imageUrls().length) % imageUrls().length);
   };
 
   const handleCarouselClick = (event: MouseEvent) => {
@@ -83,72 +68,72 @@ const Carousel: Component<CarouselProps> = (props) => {
 
   const selectImage = (index: number) => {
     setCurrentIndex(index);
+    const targetElement = carouselRef?.querySelector(`[data-index="${index}"]`);
+    targetElement?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "center",
+    });
   };
 
-  onMount(() => {
-    document.addEventListener("pointerup", handlePointerUp);
-    document.addEventListener("pointerdown", handlePointerDown);
-    document.addEventListener("pointermove", handlePointerMove);
-  });
-  onCleanup(() => {
-    document.removeEventListener("pointerup", handlePointerUp);
-    document.removeEventListener("pointerdown", handlePointerDown);
-    document.removeEventListener("pointermove", handlePointerMove);
-  });
+  onCleanup(() => observer.disconnect());
 
   return (
     <>
-      <section
-        class="xs:mobile-height flex w-full items-center justify-around overflow-hidden object-contain lg:h-full"
-        id="carousel"
-        onClick={handleCarouselClick} // Keep this if you want to maintain click functionality
-      >
-        <Show when={imageUrls().length > 0}>
-          <Transition
-            onEnter={(el, done) => {
-              const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-                duration: 150,
-              });
-              a.finished.then(done);
-            }}
-            onExit={(el, done) => {
-              const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-                duration: 150,
-              });
-              a.finished.then(done);
-            }}
-          >
-            <Show
-              when={isVideoFile(imageUrls()[currentIndex()])}
-              fallback={
-                <img
-                  src={imageUrls()[currentIndex()]}
-                  class="mh-lg mw-lg h-auto w-auto object-contain"
-                />
-              }
-            >
-              <video
-                src={imageUrls()[currentIndex()]}
-                class="mh-lg mw-lg h-auto w-auto object-contain"
-                controls
-                // autoplay
-                loop
-                muted
-              />
-            </Show>
-          </Transition>
-        </Show>
-      </section>
+      <Show when={imageUrls().length > 0}>
+        <div
+          ref={(el) => (carouselRef = el)}
+          class={`mobile-max-h h-auto w-screen overflow-x-scroll`}
+          style={{
+            display: "flex",
+            "scroll-snap-type": "x mandatory",
+            "overscroll-behavior-x": "contain",
+            "-webkit-overflow-scrolling": "touch",
+            "scrollbar-width": "none",
+            "-ms-overflow-style": "none",
+          }}
+          id="carousel"
+          onClick={handleCarouselClick}
+        >
+          <For each={imageUrls()}>
+            {(url, index) => (
+              <div
+                data-index={index()}
+                class="min-w-screen xs:mobile-height flex snap-center items-center justify-center lg:h-full"
+              >
+                <Show
+                  when={isVideoFile(url)}
+                  fallback={
+                    <img
+                      src={url}
+                      class="mh-lg mw-lg h-auto w-auto object-contain"
+                    />
+                  }
+                >
+                  <video
+                    src={url}
+                    class="mh-lg mw-lg h-auto w-auto snap-center object-contain"
+                    controls
+                    loop
+                    muted
+                  />
+                </Show>
+              </div>
+            )}
+          </For>
+        </div>
+      </Show>
 
       <Show when={imageUrls().length > 1}>
-        <div class="z-3 b-centered top-90 absolute flex gap-4">
+        <div class="absolute bottom-4 flex w-full justify-center gap-4">
           <For each={imageUrls()}>
             {(url, index) => (
               <span
-                class={`${currentIndex() === index() ? "active" : "cursor-pointer opacity-20"}`}
-                onClick={[selectImage, index()]}
+                class={`cursor-pointer ${currentIndex() === index() ? "text-black" : "text-gray-400"}`}
+                onClick={() => selectImage(index())}
+                id="untouchable"
               >
-                &#8226
+                &#8226;
               </span>
             )}
           </For>

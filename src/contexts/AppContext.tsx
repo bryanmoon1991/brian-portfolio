@@ -38,28 +38,34 @@ export function AppProvider(props) {
     document.dispatchEvent(event);
   };
 
+  const handleBackNav = (event) => {
+    event.preventDefault();
+    closeModal();
+  };
+
   const openModal = (modalName: string) => {
     setState("modalOpen", true);
     setState("currentModal", modalName);
+
     if (modalName != "About") {
       carouselVisible();
     }
+
     history.pushState({ modalOpen: true }, null);
-    console.log("open modal", history.state);
+    window.addEventListener("popstate", handleBackNav);
   };
 
   const closeModal = () => {
     if (state.currentModal != "About") {
       carouselNotVisible();
     }
+
     setState("modalOpen", false);
     setState("currentModal", null);
-    history.replaceState({}, null);
-  };
 
-  const handleBackNav = (event) => {
-    event.preventDefault();
-    closeModal();
+    history.back();
+
+    window.removeEventListener("popstate", handleBackNav);
   };
 
   const store: AppContextType = {
@@ -67,14 +73,6 @@ export function AppProvider(props) {
     openModal,
     closeModal,
   };
-
-  // Don't forget to remove the event listener on component unmount
-  onMount(() => {
-    document.addEventListener("popstate", handleBackNav);
-  });
-  onCleanup(() => {
-    document.removeEventListener("popstate", handleBackNav);
-  });
 
   return (
     <AppContext.Provider value={store}>{props.children}</AppContext.Provider>

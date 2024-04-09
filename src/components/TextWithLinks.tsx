@@ -29,7 +29,7 @@ const TextWithLinks = (props) => {
   });
 
   return (
-    <section class={props.styles ?? ""}>
+    <span class={props.styles ?? ""}>
       <For each={segments()}>
         {(part) =>
           part.type === "link" ? (
@@ -46,7 +46,7 @@ const TextWithLinks = (props) => {
           )
         }
       </For>
-    </section>
+    </span>
   );
 };
 

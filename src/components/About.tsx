@@ -16,7 +16,7 @@ const About: Component = () => {
 
   return (
     <section class="z-2 position-absolute bgcw min-h-screen w-screen">
-      <p class="xs:text-6 lg:text-9 ml-8 mr-8 mt-16 font-thin">
+      <p class="xs:text-6 lg:text-8 ml-8 mr-8 mt-16 font-thin">
         Brian is an art director and designer based in Brooklyn, New York. His
         work ranges from visual identities, art direction, editorial, and
         packaging/print for clients operating in fashion, music, technology, and
@@ -30,7 +30,14 @@ const About: Component = () => {
           <br />
           hello@brianyou.design
           <br />
-          @brian_you
+          <a
+            class="m-0"
+            href="https://www.instagram.com/brian_you/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @brian_you
+          </a>
         </p>
         <p class="xs:text-3 md:text-sm xs:leading-3 md:leading-4">
           {isSmallScreen() ? "CLIENTS" : "SELECTED CLIENTS"}

@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createSignal, createEffect, onMount, onCleanup, Show } from "solid-js";
+import { createSignal, createEffect, onCleanup } from "solid-js";
 import TextWithLinks from "./TextWithLinks";
 import { useAppContext } from "../contexts/AppContext";
 import styles from "./ImageThumb.module.css";
@@ -33,7 +33,6 @@ const ImageThumb: Component<ImageThumbProps> = (props) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            // console.log(props.alt.slice(0, 5) + "visible");
           }
         });
       },

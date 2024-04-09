@@ -25,7 +25,7 @@ const ImageIndex: Component = () => {
             blurb: manifest[imgKey].blurb,
           };
         });
-        // console.log(_imageData);
+
         setGalleries(_imageData);
 
         const pairs = [];
@@ -38,7 +38,6 @@ const ImageIndex: Component = () => {
         }
 
         setImageDataPairs(pairs);
-        // console.log(imageDataPairs());
       })
       .catch((error) => console.error("Failed to load image manifest:", error));
   });

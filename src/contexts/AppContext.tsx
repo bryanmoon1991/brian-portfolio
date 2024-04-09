@@ -1,4 +1,4 @@
-import { createContext, useContext, onMount, onCleanup } from "solid-js";
+import { createContext, useContext } from "solid-js";
 import { createStore } from "solid-js/store";
 
 interface ModalState {

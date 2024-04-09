@@ -18,7 +18,7 @@ const TextWithLinks = (props) => {
       }
       parts.push({ type: "link", content: text, url });
       lastIndex = index + match.length;
-      return match; // This return is not used; replace is used here for its side effects
+      return match;
     });
 
     if (lastIndex < inputText.length) {

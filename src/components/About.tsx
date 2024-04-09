@@ -9,9 +9,9 @@ const About: Component = () => {
     const updateScreenSize = () => setIsSmallScreen(mediaQuery.matches);
 
     updateScreenSize();
-    mediaQuery.addListener(updateScreenSize);
+    mediaQuery.addEventListener("change", updateScreenSize);
 
-    onCleanup(() => mediaQuery.removeListener(updateScreenSize));
+    onCleanup(() => mediaQuery.removeEventListener("change", updateScreenSize));
   });
 
   return (

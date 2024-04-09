@@ -2,44 +2,35 @@ import type { Component } from "solid-js";
 import styles from "./Mouse.module.css";
 import { createSignal, onCleanup, onMount } from "solid-js";
 
-const Mouse = () => {
+const Mouse: Component = () => {
   const [mouse, setMouse] = createSignal({ x: 0, y: 0 });
   const [previousMouse, setPreviousMouse] = createSignal({ x: 0, y: 0 });
   const [circle, setCircle] = createSignal({ x: 0, y: 0 });
-  const [isPulsating, setIsPulsating] = createSignal(false); // New signal to track pulsate state
+  const [isPulsating, setIsPulsating] = createSignal(false);
 
   let currentScale = 0;
   let currentAngle = 0;
-  let circleElement;
+  let circleElement: HTMLDivElement;
+  let carouselElement: HTMLElement;
 
   const speed = 0.25; // Smoothing factor for cursor movement speed
-
-  let carouselElement;
 
   const updateMousePosition = (e) => {
     setMouse({ x: e.clientX, y: e.clientY });
 
     const elementUnderCursor = document.elementFromPoint(e.clientX, e.clientY);
-    // setIsPulsating(false);
     if (elementUnderCursor) {
       if (
         elementUnderCursor.tagName === "A" ||
         elementUnderCursor.classList.contains("cursor-pointer")
       ) {
-        // circleElement.style.backgroundColor = "blue"; // Change to solid blue when over anchor tags
-        // circleElement.style.mixBlendMode = "normal"; // Optional: Reset blend mode if needed
         setIsPulsating(true);
       } else {
-        // circleElement.style.backgroundColor = "white"; // Revert to original color
-        // circleElement.style.mixBlendMode = "difference"; // Revert to original blend mode
         setIsPulsating(false);
       }
     }
   };
 
-  const easeInOutQuad = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
-
-  // Animation logic encapsulated in tick function
   const tick = () => {
     const mousePos = mouse();
     const prevMousePos = previousMouse();
@@ -67,20 +58,9 @@ const Mouse = () => {
       currentAngle = angle;
     }
 
-    // if (circleElement) {
-    //   circleElement.style.transform =
-    //     `translate(${nextCircleX}px, ${nextCircleY}px) ` +
-    //     `rotate(${currentAngle}deg) ` +
-    //     `scale(${1 + currentScale}, ${1 - currentScale})`;
-    // }
-
-    // window.requestAnimationFrame(tick);
-
     let scaleAdjustment = 1;
+
     if (isPulsating()) {
-      // Adjust scale dynamically based on the pulsate state
-      // This is a simplified example; you'd want to create a more
-      // complex function to smoothly adjust scale over time
       const pulseScale = Math.sin(Date.now() / 500) * 0.25 + 1; // Sinusoidal scale adjustment
       scaleAdjustment = pulseScale;
     }

@@ -1,12 +1,21 @@
 import type { Component } from "solid-js";
-import { createSignal, Show, For, createEffect, onCleanup } from "solid-js";
+import {
+  createSignal,
+  Show,
+  For,
+  createEffect,
+  onMount,
+  onCleanup,
+} from "solid-js";
 import Loader from "./Loader";
+import { useAppContext } from "../contexts/AppContext";
 
 type CarouselProps = {
   imageSet: string;
 };
 
 const Carousel: Component<CarouselProps> = (props) => {
+  const { closeModal } = useAppContext();
   const [currentIndex, setCurrentIndex] = createSignal(0);
   const [imageUrls, setImageUrls] = createSignal([]);
 
@@ -75,7 +84,29 @@ const Carousel: Component<CarouselProps> = (props) => {
     });
   };
 
-  onCleanup(() => observer.disconnect());
+  const keydownHandler = function (e: KeyboardEvent) {
+    const { key, code } = e;
+    const isEscapePressed = (key || code) === "Escape";
+    const arrowLeft = code === "ArrowLeft";
+    const arrowRight = code === "ArrowRight";
+
+    if (isEscapePressed) {
+      closeModal();
+    } else if (arrowLeft) {
+      prevImage();
+    } else if (arrowRight) {
+      nextImage();
+    }
+  };
+
+  onMount(() => {
+    document.addEventListener("keydown", keydownHandler);
+  });
+
+  onCleanup(() => {
+    observer.disconnect();
+    document.removeEventListener("keydown", keydownHandler);
+  });
 
   return (
     <>

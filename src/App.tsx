@@ -1,7 +1,6 @@
 import { AppProvider } from "./contexts/AppContext";
-import { Router } from "solid-app-router";
 import type { Component } from "solid-js";
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, onCleanup } from "solid-js";
 import Nav from "./components/Nav";
 import Mouse from "./components/Mouse";
 import ImageIndex from "./components/ImageIndex";
@@ -9,6 +8,17 @@ import "../styles/main.css";
 
 const App: Component = () => {
   const [isMobile, setIsMobile] = createSignal(false);
+  const [isSmallScreen, setIsSmallScreen] = createSignal(false);
+
+  createEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 320px)");
+    const updateScreenSize = () => setIsSmallScreen(mediaQuery.matches);
+
+    updateScreenSize();
+    mediaQuery.addEventListener("change", updateScreenSize);
+
+    onCleanup(() => mediaQuery.removeEventListener("change", updateScreenSize));
+  });
 
   const checkForMobile = () => {
     const userAgent = navigator.userAgent;
@@ -22,13 +32,19 @@ const App: Component = () => {
   });
 
   return (
-    <Router>
-      <AppProvider>
-        <Nav />
-        <ImageIndex />
-        {!isMobile() && <Mouse />}
-      </AppProvider>
-    </Router>
+    <AppProvider>
+      {isSmallScreen() ? (
+        <span class="flex-items-center flex h-screen w-full snap-center justify-evenly">
+          :(
+        </span>
+      ) : (
+        <>
+          <Nav />
+          <ImageIndex />
+          {!isMobile() && <Mouse />}
+        </>
+      )}
+    </AppProvider>
   );
 };
 

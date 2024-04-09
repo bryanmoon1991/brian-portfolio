@@ -39,6 +39,7 @@ const Nav: Component = () => {
         <a
           class="xl:text-4 sm:text-3 m-0 cursor-pointer pr-4 mix-blend-screen"
           onClick={handleAboutClick}
+          id="untouchable"
         >
           {state.modalOpen ? (
             isSmallScreen() ? (

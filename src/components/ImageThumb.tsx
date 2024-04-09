@@ -51,10 +51,11 @@ const ImageThumb: Component<ImageThumbProps> = (props) => {
   return (
     <>
       <div
+        style={isVisible() ? styles.fade + styles.visible : styles.fade}
         class={
-          isVisible()
-            ? `${styles["fade"]} ${styles["visible"]}`
-            : `${styles["fade"]}`
+          props.style == "a"
+            ? `xl:w-35vw lg:w-35vw md:w-29vw xs:w-45vw`
+            : `xl:w-27vw lg:w-27vw md:w-27vw xs:w-40vw`
         }
       >
         <img
@@ -64,8 +65,8 @@ const ImageThumb: Component<ImageThumbProps> = (props) => {
           id={`img-${props.alt.slice(0, 5)}`}
           class={`${
             props.style == "a"
-              ? "xl:w-35vw lg:w-35vw md:w-29vw xs:w-45vw mh h-auto cursor-pointer object-contain"
-              : "xl:w-27vw lg:w-27vw md:w-27vw xs:w-40vw mh h-auto cursor-pointer object-contain"
+              ? "xl:w-35vw lg:w-35vw md:w-29vw xs:w-45vw mh h-auto cursor-pointer object-cover object-top"
+              : "xl:w-27vw lg:w-27vw md:w-27vw xs:w-40vw mh h-auto cursor-pointer object-cover object-top"
           }`}
           onClick={handleImageClick}
         />
@@ -73,8 +74,8 @@ const ImageThumb: Component<ImageThumbProps> = (props) => {
           content={props.blurb}
           styles={
             props.style == "a"
-              ? `xl:w-35vw lg:w-35vw md:w-29vw xs:w-45vw lg:leading-4 xs:leading-3 mt-1`
-              : `xl:w-27vw lg:w-27vw md:w-27vw xs:w-40vw lg:leading-4 xs:leading-3 mt-1`
+              ? `lg:leading-4 xs:leading-3 mt-1`
+              : `lg:leading-4 xs:leading-3 mt-1`
           }
         />
       </div>

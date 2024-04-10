@@ -18,6 +18,17 @@ const Carousel: Component<CarouselProps> = (props) => {
   const { closeModal } = useAppContext();
   const [currentIndex, setCurrentIndex] = createSignal(0);
   const [imageUrls, setImageUrls] = createSignal([]);
+  const [isSmallScreen, setIsSmallScreen] = createSignal(false);
+
+  createEffect(() => {
+    const mediaQuery = window.matchMedia("(max-height: 640px)");
+    const updateScreenSize = () => setIsSmallScreen(mediaQuery.matches);
+
+    updateScreenSize();
+    mediaQuery.addEventListener("change", updateScreenSize);
+
+    onCleanup(() => mediaQuery.removeEventListener("change", updateScreenSize));
+  });
 
   let carouselRef: HTMLDivElement;
   let observer;

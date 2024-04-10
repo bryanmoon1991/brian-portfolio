@@ -90,9 +90,7 @@ const About: Component = () => {
           Moving Brands
         </p>
       </div>
-      <p class="xs:text-2 pl fixed bottom-0 w-full">
-        ©2024 All Rights Reserved
-      </p>
+      <p class="xs:text-2 left-8 fixed bottom-4">©2024 All Rights Reserved</p>
     </section>
   );
 };

@@ -166,7 +166,7 @@ const Carousel: Component<CarouselProps> = (props) => {
       </Show>
 
       <Show when={!isShortScreen() && imageUrls().length > 1}>
-        <div class="xs:bottom-35 absolute flex w-full justify-center gap-4 md:bottom-3">
+        <div class="xs:bottom-35 absolute flex w-full justify-center gap-4 md:bottom-4">
           <For each={imageUrls()}>
             {(url, index) => (
               <span

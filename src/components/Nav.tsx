@@ -1,4 +1,4 @@
-import { createSignal, createEffect, onCleanup } from "solid-js";
+import { createSignal, createEffect, onCleanup, onMount } from "solid-js";
 import type { Component } from "solid-js";
 import { Show } from "solid-js";
 import { Transition } from "solid-transition-group";
@@ -29,7 +29,7 @@ const Nav: Component = () => {
   });
 
   createEffect(() => {
-    const mediaQuery = window.matchMedia("(max-height: 480px)");
+    const mediaQuery = window.matchMedia("(max-height: 700px)");
     const updateScreenSize = () => setIsShortScreen(mediaQuery.matches);
 
     updateScreenSize();
@@ -37,6 +37,14 @@ const Nav: Component = () => {
 
     onCleanup(() => mediaQuery.removeEventListener("change", updateScreenSize));
   });
+
+  const isSafari = () => {
+    const userAgent = window.navigator.userAgent;
+    const safari = userAgent.indexOf("Safari") !== -1;
+    const chrome = userAgent.indexOf("Chrome") !== -1;
+    console.log("safari", safari && !chrome);
+    return safari && !chrome;
+  };
 
   return (
     <>
@@ -48,7 +56,11 @@ const Nav: Component = () => {
               : "Brian You, Art Direction and Design, NY")}
         </span>
         <a
-          class="lg:text-4 xs:text-3 m-0 cursor-pointer pr-4 mix-blend-screen"
+          class={
+            isSafari()
+              ? "lg:text-4 xs:text-3 m-0 cursor-pointer pr-8 mix-blend-screen"
+              : "lg:text-4 xs:text-3 m-0 cursor-pointer pr-4 mix-blend-screen"
+          }
           onClick={handleAboutClick}
           id="untouchable"
         >

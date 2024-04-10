@@ -33,7 +33,6 @@ const ImageThumb: Component<ImageThumbProps> = (props) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            console.log("set visible");
           }
         });
       },

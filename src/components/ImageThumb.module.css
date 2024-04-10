@@ -8,21 +8,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* -webkit-animation: keyFrameName 10s infinite;
-    -webkit-animation-timing-function: linear;
-    -moz-animation: keyFrameName 10s infinite;
-    -moz-animation-timing-function: linear;
-    -o-animation: keyFrameName 10s infinite;
-    -o-animation-timing-function: linear;
-    animation: keyFrameName 10s infinite;
-    animation-timing-function: linear; */
 }
 
 .visible {
     opacity: 1;
     transform: translate(0px, 0px);
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; */
 }

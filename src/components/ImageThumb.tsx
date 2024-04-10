@@ -57,7 +57,6 @@ const ImageThumb: Component<ImageThumbProps> = (props) => {
         <img
           src={props.src}
           alt={props.alt}
-          // loading="lazy"
           id={`img-${props.alt.slice(0, 5)}`}
           class={`${
             props.style == "a"

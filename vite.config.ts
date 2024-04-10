@@ -34,6 +34,7 @@ export default defineConfig({
         ["t-sm", { "font-size": "1.125rem" }],
         ["t-md", { "font-size": "1.962rem" }],
         ["t-lg", { "font-size": "2rem" }],
+        ["tracking", { "letter-spacing": "0.01rem" }],
         ["ls-sm", { "letter-spacing": "-0.02rem" }],
         ["ls-md", { "letter-spacing": "-0.0325rem" }],
         ["ls-lg", { "letter-spacing": "-0.015rem" }],

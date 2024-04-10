@@ -24,7 +24,7 @@ const About: Component = () => {
         and collaborations.
       </p>
       <div class="md:gap-30 xs:gap-5 xs:justify-between ml-8 mr-8 flex md:justify-start">
-        <p class="xs:text-3 md:text-sm xs:leading-3 md:leading-4">
+        <p class="xs:text-3 md:text-sm xs:leading-3 md:leading-4 tracking">
           CONTACT
           <br />
           <br />
@@ -39,7 +39,7 @@ const About: Component = () => {
             @brian_you
           </a>
         </p>
-        <p class="xs:text-3 md:text-sm xs:leading-3 md:leading-4">
+        <p class="xs:text-3 md:text-sm xs:leading-3 md:leading-4 tracking">
           {isSmallScreen() ? "CLIENTS" : "SELECTED CLIENTS"}
           <br />
           <br />
@@ -69,7 +69,7 @@ const About: Component = () => {
           <br />
           Wine Access
         </p>
-        <p class="xs:text-3 md:text-sm xs:leading-3 md:leading-4">
+        <p class="xs:text-3 md:text-sm xs:leading-3 md:leading-4 tracking">
           EXPERIENCE
           <br />
           <br />

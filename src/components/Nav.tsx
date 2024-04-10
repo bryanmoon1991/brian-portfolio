@@ -7,6 +7,7 @@ import { useAppContext } from "../contexts/AppContext";
 
 const Nav: Component = () => {
   const [isSmallScreen, setIsSmallScreen] = createSignal(false);
+  const [isShortScreen, setIsShortScreen] = createSignal(false);
   const { state, openModal, closeModal } = useAppContext();
 
   const handleAboutClick = () => {
@@ -27,12 +28,22 @@ const Nav: Component = () => {
     onCleanup(() => mediaQuery.removeEventListener("change", updateScreenSize));
   });
 
+  createEffect(() => {
+    const mediaQuery = window.matchMedia("(max-height: 480px)");
+    const updateScreenSize = () => setIsShortScreen(mediaQuery.matches);
+
+    updateScreenSize();
+    mediaQuery.addEventListener("change", updateScreenSize);
+
+    onCleanup(() => mediaQuery.removeEventListener("change", updateScreenSize));
+  });
+
   return (
     <>
       <header class="z-3 fixed left-0 top-0 mt-4 flex w-full justify-between">
         <span class="lg:text-4 xs:text-3 m-0 pl-4 mix-blend-screen">
           {state.currentModal != "About" &&
-            (isSmallScreen()
+            (isSmallScreen() || isShortScreen()
               ? "Brian You"
               : "Brian You, Art Direction and Design, NY")}
         </span>

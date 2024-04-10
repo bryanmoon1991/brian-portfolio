@@ -18,11 +18,11 @@ const Carousel: Component<CarouselProps> = (props) => {
   const { closeModal } = useAppContext();
   const [currentIndex, setCurrentIndex] = createSignal(0);
   const [imageUrls, setImageUrls] = createSignal([]);
-  const [isSmallScreen, setIsSmallScreen] = createSignal(false);
+  const [isShortScreen, setIsShortScreen] = createSignal(false);
 
   createEffect(() => {
-    const mediaQuery = window.matchMedia("(max-height: 640px)");
-    const updateScreenSize = () => setIsSmallScreen(mediaQuery.matches);
+    const mediaQuery = window.matchMedia("(max-height: 480px)");
+    const updateScreenSize = () => setIsShortScreen(mediaQuery.matches);
 
     updateScreenSize();
     mediaQuery.addEventListener("change", updateScreenSize);
@@ -165,7 +165,7 @@ const Carousel: Component<CarouselProps> = (props) => {
         </div>
       </Show>
 
-      <Show when={imageUrls().length > 1}>
+      <Show when={!isShortScreen() && imageUrls().length > 1}>
         <div class="xs:bottom-35 absolute flex w-full justify-center gap-4 md:bottom-3">
           <For each={imageUrls()}>
             {(url, index) => (

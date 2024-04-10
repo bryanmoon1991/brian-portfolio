@@ -23,6 +23,9 @@ body,
     padding: 0;
     box-sizing: border-box;
     overflow-x: hidden;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 #root {

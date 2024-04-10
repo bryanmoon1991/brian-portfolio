@@ -13,8 +13,4 @@
 .visible {
     opacity: 1;
     transform: translate(0px, 0px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }

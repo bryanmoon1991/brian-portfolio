@@ -53,7 +53,7 @@ const About: Component = () => {
           <br />
           Harvard Design Magazine
           <br />
-          Mercedez Benz
+          Mercedes Benz
           <br />
           Nonfiction
           <br />

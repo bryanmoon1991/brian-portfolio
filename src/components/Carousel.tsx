@@ -21,7 +21,7 @@ const Carousel: Component<CarouselProps> = (props) => {
   const [isShortScreen, setIsShortScreen] = createSignal(false);
 
   createEffect(() => {
-    const mediaQuery = window.matchMedia("(max-height: 480px)");
+    const mediaQuery = window.matchMedia("(max-height: 840px)");
     const updateScreenSize = () => setIsShortScreen(mediaQuery.matches);
 
     updateScreenSize();
